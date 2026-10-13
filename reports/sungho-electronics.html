@@ -1,0 +1,429 @@
+<title>성호전자 기업 리포트</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 단일 컬럼 리서치 노트. 좌측 정렬, 요약 → 사업 → 실적 → 재무 → 체크포인트 순 */
+:root {
+  --bg: #f6f8f9;
+  --surface: #ffffff;
+  --ink: #14212b;
+  --muted: #5a6a75;
+  --line: #d7dfe4;
+  --accent: #0a6c8f;      /* 광통신 시안 */
+  --accent-soft: #e2f0f5;
+  --warn: #a35a00;
+  --warn-soft: #fbf0e1;
+  --bad: #b3261e;
+  --good: #1e7a46;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f171d; --surface: #16212a; --ink: #e3eaee; --muted: #93a4ae; --line: #2a3a45;
+    --accent: #5cc0e2; --accent-soft: #15323e; --warn: #f0b15c; --warn-soft: #3a2a14;
+    --bad: #ff8a80; --good: #6fd39a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f171d; --surface: #16212a; --ink: #e3eaee; --muted: #93a4ae; --line: #2a3a45;
+  --accent: #5cc0e2; --accent-soft: #15323e; --warn: #f0b15c; --warn-soft: #3a2a14;
+  --bad: #ff8a80; --good: #6fd39a; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15.5px; line-height: 1.7; }
+.wrap { max-width: 880px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 64px; }
+header.top { display: grid; gap: 10px; padding-bottom: 24px; border-bottom: 2px solid var(--ink); }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.2; margin: 0; font-weight: 700; text-wrap: balance; }
+h1 .code { font-family: var(--font-mono); font-weight: 400; font-size: .5em; color: var(--muted); margin-left: 8px; }
+.lede { margin: 0; color: var(--muted); max-width: 65ch; }
+h2 { font-size: 22px; margin: 48px 0 12px; padding-top: 12px; border-top: 1px solid var(--line); text-wrap: balance; }
+h2 .num { font-family: var(--font-mono); color: var(--accent); font-size: 15px; margin-right: 10px; }
+h3 { font-size: 17px; margin: 28px 0 8px; }
+p { margin: 0 0 12px; max-width: 70ch; }
+ul, ol { margin: 0 0 12px; padding-left: 20px; max-width: 70ch; }
+li { margin-bottom: 6px; }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+nav.toc { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; }
+nav.toc a { text-decoration: none; }
+nav.toc a:hover { text-decoration: underline; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); margin: 24px 0 8px; }
+.facts div { background: var(--surface); padding: 12px 14px; min-width: 0; }
+.facts dt { font-size: 12px; color: var(--muted); }
+.facts dd { margin: 2px 0 0; font-family: var(--font-mono); font-size: 18px; font-variant-numeric: tabular-nums; }
+.facts dd small { font-size: 12px; color: var(--muted); font-family: var(--font-body); display: block; }
+.note { font-size: 13px; color: var(--muted); }
+.thesis { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 16px 0; }
+.thesis section { background: var(--surface); border: 1px solid var(--line); padding: 16px 18px; min-width: 0; }
+.thesis h3 { margin: 0 0 8px; font-size: 15px; }
+.thesis .bull h3 { color: var(--good); }
+.thesis .bear h3 { color: var(--bad); }
+.thesis ul { margin: 0; font-size: 14.5px; }
+.table-wrap { overflow-x: auto; margin: 12px 0 16px; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; background: var(--accent-soft); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.neg { color: var(--bad); }
+.pill { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; }
+.pill.hi { color: var(--bad); }
+.pill.mid { color: var(--warn); }
+.pill.lo { color: var(--good); }
+.callout { background: var(--warn-soft); border: 1px solid var(--warn); padding: 14px 16px; margin: 16px 0; font-size: 14.5px; }
+.callout strong { color: var(--warn); }
+figure { margin: 16px 0; }
+figure .svgbox { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); padding: 12px; }
+figure svg { display: block; width: 100%; height: auto; min-width: 520px; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+svg text { font-family: var(--font-body); fill: var(--ink); }
+svg .mono { font-family: var(--font-mono); }
+svg .muted { fill: var(--muted); }
+svg .acc { fill: var(--accent); }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 14px; margin: 8px 0 16px; }
+.flow span.step { background: var(--surface); border: 1px solid var(--line); padding: 4px 10px; }
+.flow span.step.me { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.flow .arr { color: var(--muted); }
+.sources { font-size: 13.5px; }
+.sources li { word-break: break-all; }
+footer { margin-top: 40px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+@media (max-width: 480px) { .wrap { padding-inline: 16px; } }
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">기업 리포트 · KOSDAQ · 2026.10.13 기준</div>
+  <h1>성호전자 <span class="code">043260</span></h1>
+  <p class="lede">50년 된 필름콘덴서·전원장치(SMPS) 회사가 2026년 2월 광트랜시버·CPO 정렬장비 업체 에이디에스테크(ADS테크)를 인수하면서 "AI 광통신 장비주"로 재평가받고 있다. 성장 스토리와 차입 기반 M&amp;A 리스크가 동시에 큰 종목이다.</p>
+  <dl class="facts">
+    <div><dt>주가</dt><dd>32,400원<small>10/8 종가 · 10/13 장중 3만원 내외</small></dd></div>
+    <div><dt>시가총액</dt><dd>약 2.44조원<small>10/8 종가 기준</small></dd></div>
+    <div><dt>2026 상반기 매출</dt><dd>1,512억원<small>전년 동기 대비 +31%</small></dd></div>
+    <div><dt>2026 상반기 영업이익</dt><dd>101억원<small>OPM 6.7%</small></dd></div>
+    <div><dt>부채비율 (연결)</dt><dd>223.1%<small>2Q26 · 순차입금 4,137억</small></dd></div>
+    <div><dt>최대주주 측 지분</dt><dd>64.33%<small>서룡전자 외 특관인 · 3월</small></dd></div>
+  </dl>
+  <p class="note">수치는 공시·언론·증권사 자료를 모은 것이며 출처마다 다른 값은 본문에 함께 표시했다. 투자 판단 전에 DART 원문을 확인할 것.</p>
+  <nav class="toc" aria-label="목차">
+    <a href="#s1">1. 한눈에 보기</a><a href="#s2">2. 회사 개요</a><a href="#s3">3. 사업 구조</a><a href="#s4">4. 핵심 기술: CPO와 정렬장비</a><a href="#s5">5. 실적</a><a href="#s6">6. 재무·자금조달</a><a href="#s7">7. 주가·밸류에이션</a><a href="#s8">8. 투자 체크포인트</a><a href="#src">출처</a>
+  </nav>
+</header>
+
+<h2 id="s1"><span class="num">1</span>한눈에 보기</h2>
+<p>성호전자는 본업(콘덴서·전원장치)만 보면 매출 2천억원대, 영업이익률 1~3%의 저성장 부품사다. 주가를 끌어올린 것은 자회사 ADS테크다. ADS테크는 엔비디아 자회사 멜라녹스에 광트랜시버 조립용 <b>액티브 얼라인먼트(Active Alignment) 장비</b>를 공급하고, 차세대 네트워크 기술인 <b>CPO(Co-Packaged Optics)</b>용 장비 수주도 시작했다. 2026년 상반기 연결 영업이익의 85%를 인수 자회사들이 벌었다.</p>
+<div class="thesis">
+  <section class="bull">
+    <h3>상승 논리</h3>
+    <ul>
+      <li>AI 데이터센터 광 연결 수요(800G → 1.6T → CPO)에 직접 노출된 국내 희소 장비주</li>
+      <li>신한투자증권은 이 장비를 만들 수 있는 곳을 ADS테크와 독일 피콘텍(ficonTEC) 두 곳으로 분석</li>
+      <li>ADS테크 영업이익률 40% 안팎(2024년 39.7%)의 고마진 구조</li>
+      <li>고객 다변화 진행: 멜라녹스 외 Lumentum, Optolink, Jabil, 미국 상장 'C사'(235억원 PO)</li>
+      <li>신한투자증권 연결 영업이익 전망 340억(26E) → 741억(27E) → 1,774억(28E)</li>
+    </ul>
+  </section>
+  <section class="bear">
+    <h3>하락 논리</h3>
+    <ul>
+      <li>자체 현금 없이 CB·BW·인수금융으로 1년여간 약 4,468억원 규모 M&amp;A</li>
+      <li>단기차입금 2,621억원 vs 별도 현금 102억원(1Q26), 이자보상배율 1배 미만</li>
+      <li>최대주주 서룡전자의 주식담보대출: 주가 급락 시 반대매매 위험</li>
+      <li>대규모 CB·BW로 인한 지분 희석. 대신증권은 희석 반영 시 2028E PER 20배로 계산</li>
+      <li>CPO 양산 시점(2027~28년)과 하이퍼스케일러 채택 속도에 대한 불확실성</li>
+    </ul>
+  </section>
+</div>
+
+<h2 id="s2"><span class="num">2</span>회사 개요</h2>
+<div class="table-wrap"><table>
+  <tr><th>항목</th><th>내용</th></tr>
+  <tr><td>시장</td><td>코스닥 (종목코드 043260)</td></tr>
+  <tr><td>본업</td><td>필름콘덴서(MPP·MPE·CMPP 등), 전원공급장치(SMPS: 셋톱박스·프린터·LED조명용), 콘덴서용 증착필름 자체 생산</td></tr>
+  <tr><td>지배구조</td><td>최대주주 서룡전자(약 30.5%), 박성재 부회장(약 4.2%), 박현남 회장(약 2.0%). 특관인 합산 64.33% (2026년 3월 공시)</td></tr>
+  <tr><td>경영</td><td>창업주 박현남 회장의 장남 박성재 부회장이 공격적인 M&amp;A를 주도</td></tr>
+  <tr><td>연결 사업부문</td><td>콘덴서 및 파워 / 반도체(ADS테크·인티맥스 등) / 건설 / 임대 / 기타</td></tr>
+</table></div>
+
+<h3>M&amp;A 타임라인</h3>
+<div class="table-wrap"><table>
+  <tr><th>시점</th><th>대상</th><th>내용</th></tr>
+  <tr><td>2025년</td><td>6개사</td><td>1년간 6건 인수 (바른창호 등 건설 부문 포함)</td></tr>
+  <tr><td>2025.12.8</td><td>ADS테크</td><td>지분 87.5%를 약 2,800억원에 인수 공시. SPC '어매이징홀딩스' 경유</td></tr>
+  <tr><td>2026.1</td><td>DIS</td><td>연결 편입. 상반기 매출 115억, 영업이익 24억</td></tr>
+  <tr><td>2026.2.13</td><td>ADS테크</td><td>거래 종결, 자회사 편입</td></tr>
+  <tr><td>2026.4</td><td>핑거</td><td>인수 완료 (핀테크 계열사)</td></tr>
+  <tr><td>2026.6</td><td>인티맥스</td><td>ADS테크를 통해 반도체 검사장비사 지분 87.77% 595억원에 인수 계약 (한국경제는 90%·640억원으로 보도). 삼성전자·SK하이닉스 공급사</td></tr>
+  <tr><td>2026 하반기</td><td>세아FSI 등</td><td>추가 인수 추진 보도 (MTN, 8월)</td></tr>
+</table></div>
+
+<h2 id="s3"><span class="num">3</span>사업 구조</h2>
+<p>성호전자는 이제 서로 성격이 다른 두 회사가 붙어 있는 구조다. 하나는 저마진·안정형 전자부품 본업, 다른 하나는 고마진·고성장·고변동 광통신 장비 자회사다.</p>
+
+<h3>2026 상반기 부문별 실적 (연결, 억원)</h3>
+<div class="table-wrap"><table>
+  <tr><th>부문</th><th class="n">매출</th><th class="n">영업손익</th><th>성격</th></tr>
+  <tr><td>콘덴서 및 파워</td><td class="n">1,142.8</td><td class="n">11.6</td><td>본업. 매출 대부분이지만 이익은 거의 없음</td></tr>
+  <tr><td>반도체 (ADS테크 등)</td><td class="n">345.5</td><td class="n">85.5</td><td>신규 편입. 영업이익의 대부분</td></tr>
+  <tr><td>건설</td><td class="n">288.6</td><td class="n">3.1</td><td>인수한 창호·건설 계열</td></tr>
+  <tr><td>기타</td><td class="n">111.7</td><td class="n">8.9</td><td></td></tr>
+  <tr><td>임대</td><td class="n">24.3</td><td class="n neg">-1.1</td><td></td></tr>
+  <tr><td>내부거래 제거</td><td class="n">-400.5</td><td class="n">-7.1</td><td></td></tr>
+  <tr><td><b>합계</b></td><td class="n"><b>1,512.4</b></td><td class="n"><b>101.0</b></td><td></td></tr>
+</table></div>
+<p class="note">상반기 별도(성호전자 단독) 기준 매출 764.5억, 영업이익 1.8억. 박성재 부회장도 연결 영업이익은 사실상 전부 자회사에서 나왔다고 밝혔다 (아시아경제, 8/18).</p>
+
+<h3>3-1. 본업: 필름콘덴서·전원장치</h3>
+<p>제품 매출 비중은 전원장치(PSU) 약 73.6%, 필름콘덴서 25.7%, 증착필름 0.7%다. 필름콘덴서는 플라스틱 필름에 금속을 얇게 증착한 전극을 감아 만든 콘덴서로, 고전압·고신뢰가 필요한 인버터에 쓰인다. 전기차 충전기, 태양광 인버터, ESS, 산업용 전원장치가 전방 시장이다. 회사는 핵심 소재인 증착필름을 내재화했고 국내 점유율 1위라고 소개한다.</p>
+<p>본업은 원재료(PP 필름·알루미늄·구리) 가격, 환율, 해외 생산법인 가동률에 따라 이익이 흔들린다. 2025년 본업은 부진했고 2026년 상반기 별도 영업이익률은 0.2%에 그쳤다.</p>
+
+<h3>3-2. 신사업: ADS테크 (광트랜시버·CPO 정렬장비)</h3>
+<p>2000년 설립. 광모듈 안에서 레이저·렌즈·광섬유를 나노미터 단위로 정렬하고 접착하는 장비를 만든다. 정렬 후 부착 방식에 따라 Epoxy 장비와 Laser 장비로 나뉘며, 데이터센터용 고속 광트랜시버에는 Epoxy 장비가 주력이다. 2025년까지 800G용이 주력이었고 2026년부터 1.6T와 CPO용 공급 확대가 기대된다.</p>
+<div class="table-wrap"><table>
+  <tr><th>고객사 (3Q25 누적 매출 비중)</th><th class="n">비중</th><th>비고</th></tr>
+  <tr><td>Mellanox (엔비디아 자회사)</td><td class="n">70.9%</td><td>2015년부터 협업. 2024년 비중은 약 97%</td></tr>
+  <tr><td>Optolink</td><td class="n">13.9%</td><td>광모듈사</td></tr>
+  <tr><td>Lumentum</td><td class="n">11.0%</td><td>미국 광소자·모듈</td></tr>
+  <tr><td>기타</td><td class="n">4.2%</td><td>2026년 Jabil, Broadcom, Marvell, Accton 등으로 확대 기대</td></tr>
+</table></div>
+<p class="note">출처: 메리츠증권(2026.2.20). 2026년 누적 수주 807억원 중 CPO 관련 37%(약 299억원). 8월에는 미국 NYSE 상장 'C사'로부터 1,645만달러(약 235억원) PO 수주.</p>
+
+<h2 id="s4"><span class="num">4</span>핵심 기술: CPO와 액티브 얼라인먼트</h2>
+<p>AI 데이터센터에서는 GPU와 스위치 사이 데이터 이동량이 폭증한다. 지금은 스위치 칩과 떼어 꽂는 광모듈(Pluggable) 사이를 15~20cm 구리 배선으로 잇는데, 1.6T 이상에서는 이 구리 구간의 발열과 신호 손실이 커진다. CPO는 광 엔진을 칩 바로 옆 같은 패키지 기판 위에 올려 구리 구간을 거의 없앤다. 메리츠증권은 전력 소모를 Pluggable 대비 최대 50%까지 줄일 수 있다고 정리했다.</p>
+<figure>
+  <div class="svgbox">
+  <svg viewBox="0 0 760 330" role="img" aria-label="Pluggable 방식과 CPO 방식 비교, 그리고 액티브 얼라인먼트 개념도">
+    <!-- Panel A: Pluggable -->
+    <text x="20" y="24" font-size="14" font-weight="600">A. Pluggable (현재)</text>
+    <rect x="20" y="40" width="340" height="16" fill="var(--line)"/>
+    <text x="190" y="52" font-size="10" text-anchor="middle" class="muted">스위치 보드 (PCB)</text>
+    <rect x="40" y="62" width="80" height="50" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text x="80" y="91" font-size="12" text-anchor="middle">스위치 ASIC</text>
+    <line x1="120" y1="87" x2="250" y2="87" stroke="var(--warn)" stroke-width="3"/>
+    <text x="185" y="80" font-size="11" text-anchor="middle" fill="var(--warn)">구리 배선 15~20cm</text>
+    <text x="185" y="104" font-size="10" text-anchor="middle" class="muted">발열·신호손실 ↑</text>
+    <rect x="250" y="62" width="90" height="50" fill="var(--surface)" stroke="var(--ink)"/>
+    <text x="295" y="84" font-size="11" text-anchor="middle">광트랜시버</text>
+    <text x="295" y="99" font-size="10" text-anchor="middle" class="muted">(꽂는 모듈)</text>
+    <line x1="340" y1="87" x2="360" y2="87" stroke="var(--accent)" stroke-width="2"/>
+
+    <!-- Panel B: CPO -->
+    <text x="400" y="24" font-size="14" font-weight="600">B. CPO (차세대)</text>
+    <rect x="400" y="40" width="340" height="16" fill="var(--line)"/>
+    <text x="570" y="52" font-size="10" text-anchor="middle" class="muted">패키지 기판</text>
+    <rect x="420" y="62" width="300" height="50" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/>
+    <rect x="520" y="68" width="100" height="38" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text x="570" y="91" font-size="12" text-anchor="middle">스위치 ASIC</text>
+    <rect x="430" y="72" width="70" height="30" fill="var(--surface)" stroke="var(--ink)"/>
+    <text x="465" y="91" font-size="10" text-anchor="middle">광 엔진</text>
+    <rect x="640" y="72" width="70" height="30" fill="var(--surface)" stroke="var(--ink)"/>
+    <text x="675" y="91" font-size="10" text-anchor="middle">광 엔진</text>
+    <line x1="500" y1="87" x2="520" y2="87" stroke="var(--warn)" stroke-width="3"/>
+    <line x1="620" y1="87" x2="640" y2="87" stroke="var(--warn)" stroke-width="3"/>
+    <text x="570" y="128" font-size="10" text-anchor="middle" class="muted">구리 구간 mm 단위로 축소 → 전력 최대 50% 절감</text>
+
+    <!-- Panel C: Active alignment -->
+    <text x="20" y="176" font-size="14" font-weight="600">C. ADS테크 장비가 하는 일: 액티브 얼라인먼트</text>
+    <rect x="40" y="220" width="70" height="44" fill="var(--surface)" stroke="var(--ink)"/>
+    <text x="75" y="246" font-size="11" text-anchor="middle">레이저</text>
+    <polygon points="110,236 230,232 230,252 110,248" fill="var(--accent-soft)"/>
+    <ellipse cx="250" cy="242" rx="12" ry="26" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text x="250" y="288" font-size="11" text-anchor="middle">렌즈</text>
+    <polygon points="262,236 380,240 380,244 262,248" fill="var(--accent-soft)"/>
+    <rect x="380" y="234" width="200" height="16" fill="var(--surface)" stroke="var(--accent)"/>
+    <text x="480" y="228" font-size="11" text-anchor="middle">광섬유</text>
+    <rect x="600" y="220" width="120" height="44" fill="var(--accent-soft)" stroke="var(--accent)"/>
+    <text x="660" y="240" font-size="11" text-anchor="middle">광출력 측정</text>
+    <text x="660" y="255" font-size="10" text-anchor="middle" class="muted">실시간 피드백</text>
+    <path d="M660 266 C 660 316, 250 316, 250 272" fill="none" stroke="var(--muted)" stroke-dasharray="3 3"/>
+    <text x="455" y="320" font-size="10" text-anchor="middle" class="muted">빛을 실제로 쏘면서 결합 효율이 최대가 되는 위치로 nm 단위 이동 → 에폭시/레이저로 고정</text>
+  </svg>
+  </div>
+  <figcaption>개념도. 패시브 정렬은 기계적 기준점에 맞춰 붙이는 방식이고, 액티브 정렬은 광 신호를 측정하며 위치를 잡아 정밀도와 결합 효율이 높다. 정렬 과정에서 모듈 테스트도 함께 된다.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+  <tr><th>구성요소</th><th>예시</th><th>역할</th><th>왜 필요한가</th></tr>
+  <tr><td>스위치/GPU ASIC</td><td>엔비디아 Spectrum-X, Quantum-X</td><td>데이터 처리·라우팅</td><td>연산·전송 속도의 출발점</td></tr>
+  <tr><td>광 엔진</td><td>레이저, 변조기, 광검출기</td><td>전기 신호 ↔ 빛 변환</td><td>장거리·고속 전송은 빛이 유리</td></tr>
+  <tr><td>렌즈·광섬유 결합부</td><td>마이크로렌즈, FAU</td><td>빛을 광섬유로 손실 없이 넣음</td><td>정렬 오차가 수 μm만 돼도 신호가 크게 줄어듦</td></tr>
+  <tr><td>정렬·접착 장비</td><td>ADS테크 Epoxy/Laser 장비, ficonTEC</td><td>부품을 nm 정밀도로 맞추고 고정</td><td>수율과 대량생산 속도를 결정하는 병목 공정</td></tr>
+</table></div>
+<p>밸류체인 상 ADS테크의 위치는 다음과 같다.</p>
+<div class="flow">
+  <span class="step">광소자·칩 (Lumentum, Coherent)</span><span class="arr">→</span>
+  <span class="step me">정렬·조립 장비 (ADS테크)</span><span class="arr">→</span>
+  <span class="step">광모듈·CPO 조립 (Mellanox, Jabil, Fabrinet)</span><span class="arr">→</span>
+  <span class="step">스위치·서버 (엔비디아, Broadcom)</span><span class="arr">→</span>
+  <span class="step">하이퍼스케일러</span>
+</div>
+<p>엔비디아는 CES 2026에서 Spectrum-X Ethernet Photonics를 공개하고 Vera Rubin 출시(3Q26)를 CPO 상용화 분기점으로 제시했다. Lumentum은 2H27 Rubin Ultra 세대에서 랙 내부(Scale-up)까지 CPO가 쓰일 가능성을 언급했다. 랙 간 연결(Scale-out)을 넘어 랙 내부까지 확대되면 장비 수요가 한 단계 커진다는 것이 시장의 기대다.</p>
+
+<h2 id="s5"><span class="num">5</span>실적</h2>
+<h3>연결 연간 실적 추이</h3>
+<figure>
+  <div class="svgbox">
+  <svg viewBox="0 0 640 250" role="img" aria-label="2020~2025년 연결 매출액 막대 그래프">
+    <!-- scale: 0~2,400억 → 0~160px, baseline y=200 -->
+    <line x1="50" y1="200" x2="620" y2="200" stroke="var(--line)"/>
+    <line x1="50" y1="146.7" x2="620" y2="146.7" stroke="var(--line)" stroke-dasharray="2 4"/>
+    <line x1="50" y1="93.3" x2="620" y2="93.3" stroke="var(--line)" stroke-dasharray="2 4"/>
+    <line x1="50" y1="40" x2="620" y2="40" stroke="var(--line)" stroke-dasharray="2 4"/>
+    <text x="44" y="204" font-size="10" text-anchor="end" class="muted mono">0</text>
+    <text x="44" y="150" font-size="10" text-anchor="end" class="muted mono">800</text>
+    <text x="44" y="97" font-size="10" text-anchor="end" class="muted mono">1,600</text>
+    <text x="44" y="44" font-size="10" text-anchor="end" class="muted mono">2,400</text>
+    <g>
+      <rect x="75" y="128.5" width="56" height="71.5" fill="var(--accent)" opacity=".55"/>
+      <text x="103" y="122" font-size="11" text-anchor="middle" class="mono">1,072</text>
+      <text x="103" y="218" font-size="11" text-anchor="middle">2020</text>
+      <text x="103" y="234" font-size="10" text-anchor="middle" class="muted mono">OP 28</text>
+    </g>
+    <g>
+      <rect x="168" y="111.2" width="56" height="88.8" fill="var(--accent)" opacity=".55"/>
+      <text x="196" y="105" font-size="11" text-anchor="middle" class="mono">1,332</text>
+      <text x="196" y="218" font-size="11" text-anchor="middle">2021</text>
+      <text x="196" y="234" font-size="10" text-anchor="middle" class="muted mono">OP 12</text>
+    </g>
+    <g>
+      <rect x="261" y="97.6" width="56" height="102.4" fill="var(--accent)" opacity=".55"/>
+      <text x="289" y="91" font-size="11" text-anchor="middle" class="mono">1,536</text>
+      <text x="289" y="218" font-size="11" text-anchor="middle">2022</text>
+      <text x="289" y="234" font-size="10" text-anchor="middle" class="muted mono">OP 20</text>
+    </g>
+    <g>
+      <rect x="354" y="61.3" width="56" height="138.7" fill="var(--accent)" opacity=".55"/>
+      <text x="382" y="55" font-size="11" text-anchor="middle" class="mono">2,081</text>
+      <text x="382" y="218" font-size="11" text-anchor="middle">2023</text>
+      <text x="382" y="234" font-size="10" text-anchor="middle" class="muted mono">OP 259</text>
+    </g>
+    <g>
+      <rect x="447" y="61.8" width="56" height="138.2" fill="var(--accent)" opacity=".55"/>
+      <text x="475" y="55" font-size="11" text-anchor="middle" class="mono">2,073</text>
+      <text x="475" y="218" font-size="11" text-anchor="middle">2024</text>
+      <text x="475" y="234" font-size="10" text-anchor="middle" class="muted mono">OP 63</text>
+    </g>
+    <g>
+      <rect x="540" y="45.6" width="56" height="154.4" fill="var(--accent)"/>
+      <text x="568" y="39" font-size="11" text-anchor="middle" class="mono" font-weight="600">2,316</text>
+      <text x="568" y="218" font-size="11" text-anchor="middle">2025</text>
+      <text x="568" y="234" font-size="10" text-anchor="middle" class="muted mono">OP 76</text>
+    </g>
+  </svg>
+  </div>
+  <figcaption>연결 매출액(억원)과 영업이익(OP, 억원). 2020~2024년은 메리츠증권, 2025년은 사업보고서 기반 집계(매출 2,315.8억, 영업이익 75.5억).</figcaption>
+</figure>
+
+<div class="table-wrap"><table>
+  <tr><th>억원</th><th class="n">2023</th><th class="n">2024</th><th class="n">2025</th><th class="n">1Q26</th><th class="n">2Q26</th><th class="n">1H26</th></tr>
+  <tr><td>매출액</td><td class="n">2,081</td><td class="n">2,073</td><td class="n">2,316</td><td class="n">660</td><td class="n">852</td><td class="n">1,512</td></tr>
+  <tr><td>영업이익</td><td class="n">259</td><td class="n">63</td><td class="n">76</td><td class="n">32</td><td class="n">69</td><td class="n">101</td></tr>
+  <tr><td>영업이익률</td><td class="n">12.4%</td><td class="n">3.0%</td><td class="n">3.3%</td><td class="n">4.9%</td><td class="n">8.1%</td><td class="n">6.7%</td></tr>
+  <tr><td>순이익</td><td class="n">177</td><td class="n">80</td><td class="n">910</td><td class="n">3,195*</td><td class="n neg">-460</td><td class="n">—</td></tr>
+</table></div>
+<p class="note">* 1Q26 순이익은 블로그 집계(needinfo) 값으로, 계열사 편입에 따른 일회성 사업결합 이익이 반영된 것으로 설명된다. 2025년 순이익 910억도 금융수익 1,381억(주가 급등에 따른 파생상품 평가이익 등)이 원인이다. 2Q26 순손실은 세부 원인이 확인되지 않았으며, 메자닌 파생상품 평가손익과 이자비용이 순이익을 크게 흔드는 구조라는 점만 확인된다. 영업이익 기준으로 판단하는 편이 안전하다.</p>
+
+<h3>ADS테크 단독 실적과 전망</h3>
+<div class="table-wrap"><table>
+  <tr><th>억원</th><th class="n">2022</th><th class="n">2023</th><th class="n">2024</th><th class="n">2025</th><th class="n">2026E</th></tr>
+  <tr><td>매출액</td><td class="n">121</td><td class="n">95</td><td class="n">636</td><td class="n">527</td><td class="n">865</td></tr>
+  <tr><td>영업이익</td><td class="n">22</td><td class="n">1</td><td class="n">253</td><td class="n">208</td><td class="n">428</td></tr>
+  <tr><td>영업이익률</td><td class="n">18.0%</td><td class="n">1.0%</td><td class="n">39.7%</td><td class="n">39.5%</td><td class="n">49.5%</td></tr>
+</table></div>
+<p class="note">2022~2024년·2026E는 메리츠증권(2026.2), 2025년 실적은 MTN 보도. 2024년 800G 수주 집중 → 2025년 기저 부담 → 2026년 1.6T·CPO 세대 전환으로 재성장이라는 흐름. 편입 후(2~6월) 연결 기여는 매출 169억, 영업이익 51억이었다.</p>
+
+<h3>증권사 연결 영업이익 전망</h3>
+<div class="table-wrap"><table>
+  <tr><th>억원</th><th class="n">2026E</th><th class="n">2027E</th><th class="n">2028E</th></tr>
+  <tr><td>신한투자증권 (2026.7)</td><td class="n">340</td><td class="n">741</td><td class="n">1,774</td></tr>
+</table></div>
+<p>상반기 실적이 101억이므로 2026년 전망치 340억을 맞추려면 하반기에만 약 240억이 필요하다. 하반기 CPO·1.6T 장비 매출 인식이 실제로 얼마나 나오는지가 첫 번째 검증 포인트다.</p>
+
+<h2 id="s6"><span class="num">6</span>재무·자금조달 구조</h2>
+<div class="callout"><strong>핵심 리스크.</strong> 성호전자는 인수 대금을 자체 현금이 아니라 CB·BW 발행, 인수금융, 최대주주 주식담보대출로 마련했다. 주가가 오르면 메자닌 가치가 올라 자금조달이 쉬워지고, 주가가 떨어지면 조기상환 요구·반대매매·평가손실이 한꺼번에 몰릴 수 있는 구조다.</div>
+
+<h3>ADS테크 인수 대금 2,800억원 조달 구조 (MTN, 2026.2)</h3>
+<ol>
+  <li>성호전자가 800억원 규모 CB·BW를 발행하고, 700억원을 SPC 어매이징홀딩스에 출자 → 매도 주주에게 지급</li>
+  <li>매도 주주가 SPC에 RCPS 300억원·CPS 340억원으로 재투자 (CPS 연 15%)</li>
+  <li>나머지 1,500억원은 인수금융 (산업은행, 푸른저축은행, 다올금융그룹 등)</li>
+  <li>이후 서룡전자가 성호전자 주식 담보로 최대 3,000억원(연 5.6%)을 빌려 성호전자에 대여 → 인수금융 상환</li>
+</ol>
+
+<h3>주요 재무 지표</h3>
+<div class="table-wrap"><table>
+  <tr><th>지표</th><th class="n">값</th><th>시점·출처</th><th>판단</th></tr>
+  <tr><td>부채비율 (연결)</td><td class="n">223.1%</td><td>2Q26</td><td><span class="pill hi">높음</span> 회사는 ADS테크 관련 메자닌 800억을 자본으로 보면 171.5%라고 설명</td></tr>
+  <tr><td>순차입금</td><td class="n">4,137억</td><td>2Q26</td><td><span class="pill hi">높음</span></td></tr>
+  <tr><td>단기차입금</td><td class="n">2,621억</td><td>MTN 8월 보도</td><td><span class="pill hi">높음</span> 2024말 1,099억 → 2025말 1,686억 → 3월말 1,971억</td></tr>
+  <tr><td>별도 현금성자산</td><td class="n">102억</td><td>1Q26</td><td><span class="pill hi">부족</span></td></tr>
+  <tr><td>이자보상배율</td><td class="n">&lt; 1배</td><td>2025년(영업익 75억/이자 106억), 1Q26(32억/32억)</td><td><span class="pill hi">위험</span></td></tr>
+  <tr><td>영업활동현금흐름</td><td class="n">-162억</td><td>1Q26 (2025년 +201억)</td><td><span class="pill mid">악화</span></td></tr>
+  <tr><td>20회차 CB</td><td class="n">895억</td><td>2026.8, 표면금리 0%</td><td><span class="pill lo">금리↓</span> 연 41억 이자 절감, 대신 희석 부담</td></tr>
+  <tr><td>CB·BW 발행 한도</td><td class="n">각 2조원</td><td>3/30 주총에서 1천억 → 2조로 상향</td><td><span class="pill mid">희석 잠재</span></td></tr>
+</table></div>
+
+<h3>최대주주 담보 현황</h3>
+<p>서룡전자는 보유 성호전자 주식 약 2,741만주(발행주식의 37.37%)를 담보로 제공했다. 7월 2일 주가가 장중 27% 넘게 급락해 21,450원까지 내려가며 반대매매 우려가 커졌다. 이후 CB·BW 재매각(약 780억)과 단기차입(650억) 등으로 담보대출을 일부 조기상환해 잔액이 약 1,650억원으로 줄었다. MTN은 주가가 약 1만2천원 아래로 내려가지 않으면 당분간 반대매매 우려는 크지 않다고 분석했다.</p>
+<p>그 밖에 계열사 핑거가 성호전자 주식을 장내 매입(6~7월 50억원, 추가 50억 계획)한 것을 두고 주가 부양 논란이 있었고, 2,000~2,500억원 규모 추가 CB 발행 추진도 보도됐다(8월). 증권가 일부는 "빚으로 빚을 갚는 구조"라고 비판한다.</p>
+
+<h2 id="s7"><span class="num">7</span>주가·밸류에이션</h2>
+<div class="table-wrap"><table>
+  <tr><th>시점</th><th class="n">주가</th><th>이벤트</th></tr>
+  <tr><td>2025년 중반</td><td class="n">약 1,000원</td><td>52주 최저 909원 (시총 1천억 미만)</td></tr>
+  <tr><td>2025.12</td><td class="n">급등</td><td>ADS테크 인수 공시</td></tr>
+  <tr><td>2026.2.19</td><td class="n">21,100원</td><td>시총 1.50조원, 발행주식 7,092만주 (메리츠)</td></tr>
+  <tr><td>2026.7.2</td><td class="n">21,450원</td><td>장중 -27% 급락 (반대매매 우려)</td></tr>
+  <tr><td>2026.9.15</td><td class="n">21,600원</td><td></td></tr>
+  <tr><td>2026.10.8</td><td class="n">32,400원</td><td>시총 약 2.44조원</td></tr>
+  <tr><td>2026.10.13</td><td class="n">≈30,000원</td><td>장중 28,200~31,000원, 거래대금 636억</td></tr>
+</table></div>
+<ul>
+  <li><b>대신증권:</b> 2028E PER 10배. CB·BW 희석 시가총액을 반영하면 20배로, 실적 성장이 상당 부분 주가에 반영됐다고 평가.</li>
+  <li><b>신한투자증권 전망 대입:</b> 시총 2.44조 ÷ 2028E 영업이익 1,774억 ≈ 영업이익 기준 14배. 순차입금 4,137억을 더하면 EV/영업이익은 약 16배. 2026E 영업이익(340억) 기준으로는 70배를 넘는다.</li>
+  <li><b>목표주가:</b> 6월 말 한 증권사가 매수·목표가 70,000원을 제시했다는 집계가 있으나, 메리츠·대신 등 다수는 Not Rated다.</li>
+</ul>
+<p>정리하면 현재 주가는 2027~28년 CPO 양산 시나리오를 상당 부분 선반영하고 있다. 이 시나리오가 늦어지거나 고객이 이탈하면, 높은 레버리지 때문에 주가 하락 폭이 실적 하락보다 커질 수 있다.</p>
+
+<h2 id="s8"><span class="num">8</span>투자 체크포인트</h2>
+<h3>경쟁 구도</h3>
+<p>광트랜시버·CPO용 액티브 얼라인먼트 장비는 소수 업체 과점 시장이다. ADS테크의 경쟁자로는 독일 ficonTEC가 대표적이며, 엔비디아 레퍼런스가 진입장벽 역할을 한다. 반면 고객 집중도가 매우 높아 가격 결정력은 고객 쪽에 있다. 멜라녹스 비중이 70%대에서 얼마나 내려오는지가 협상력의 지표다. 본업 필름콘덴서는 중국 업체와 경쟁하는 범용 시장으로, 가격 결정력이 약하다. <b>지금 국면:</b> 장비는 파일럿에서 양산 발주로 넘어가는 초입이고, 본업은 손익분기 수준이다.</p>
+
+<h3>선행 지표 (실적보다 먼저 움직이는 숫자)</h3>
+<div class="table-wrap"><table>
+  <tr><th>지표</th><th>왜 중요한가</th><th>확인처</th></tr>
+  <tr><td>ADS테크 신규 수주 공시</td><td>장비 매출은 수주 후 2~3분기 뒤 인식. 2026 누적 807억(CPO 37%)이 기준선</td><td>DART 단일판매·공급계약, 회사 보도자료</td></tr>
+  <tr><td>엔비디아·Broadcom CPO 로드맵</td><td>Vera Rubin(3Q26)·Rubin Ultra(2H27) 일정이 장비 발주 시점을 결정</td><td>엔비디아 GTC·실적발표, Broadcom 실적발표</td></tr>
+  <tr><td>Lumentum·Coherent·Fabrinet 실적</td><td>광모듈 고객사의 Capex와 1.6T 출하 속도</td><td>각사 분기 실적</td></tr>
+  <tr><td>800G·1.6T 광트랜시버 출하량</td><td>세대 전환 속도 = 정렬장비 교체 수요</td><td>LightCounting, Yole 리포트</td></tr>
+  <tr><td>분기 연결 영업이익과 이자비용</td><td>이자보상배율 1배 회복 여부가 재무 리스크 완화의 신호</td><td>분기보고서</td></tr>
+  <tr><td>최대주주 담보·메자닌 공시</td><td>담보 추가, 전환가 조정(리픽싱), 풋옵션 행사는 수급·희석 신호</td><td>DART 주식등의대량보유상황보고서, CB 관련 공시</td></tr>
+</table></div>
+
+<h3>정책·규제 리스크</h3>
+<ul>
+  <li><b>미·중 수출통제:</b> 광모듈 공급망의 상당 부분이 중국·동남아에 있어, 미국의 대중 장비·AI 수출규제가 강화되면 수주에 영향이 있을 수 있다.</li>
+  <li><b>메자닌 규제:</b> 금융당국의 CB 리픽싱·콜옵션 규제 강화 기조는 성호전자식 자금조달을 어렵게 만들 수 있다.</li>
+  <li><b>본업:</b> 전기차 보조금·재생에너지 정책은 필름콘덴서 수요에 영향을 주지만 연결 이익에서 차지하는 비중은 작다.</li>
+</ul>
+
+<h3>결론</h3>
+<p>성호전자는 "ADS테크 + 레버리지"로 보는 것이 맞다. 주가의 방향은 ADS테크의 CPO 양산 수주가 2026년 4분기~2027년에 실제로 늘어나는지, 그 현금흐름이 단기차입과 메자닌 상환 압박보다 빨리 들어오는지에 달려 있다. 4분기 실적에서 영업이익이 이자비용을 확실히 넘는지 먼저 확인하는 것이 순서다.</p>
+
+<h2 id="src">출처</h2>
+<ul class="sources">
+  <li><a href="https://home.imeritz.com/include/resource/research/WorkFlow/20260220073347635K_02.pdf">메리츠증권, 성호전자 Company Brief "다가오는 CPO 시대의 주인공" (2026.2.20)</a></li>
+  <li><a href="https://kr.investing.com/news/stock-market-news/article-2001675">EBN, "2028년까지 영업익 5배 뛴다"…성호전자 AI 성장엔진 가동 (2026.7.1)</a></li>
+  <li><a href="https://news.mtn.co.kr/news-detail/2026021814062893837/share-modal">MTN, 6개월 만에 2000% 폭등…성호전자, 2800억 빅딜의 전말 (2026.2)</a></li>
+  <li><a href="https://news.mtn.co.kr/news-detail/2026080422561076443">MTN, 성호전자, 돌려막기의 끝은 어디인가? (2026.8.5)</a></li>
+  <li><a href="https://newstomato.com/ReadNews.aspx?no=1307102">IB토마토, 성호전자 '현금 없는 M&amp;A'의 부메랑…차입·이자 부담 커졌다 (2026.7.16)</a></li>
+  <li><a href="https://newstomato.com/ReadNews.aspx?no=1309039">IB토마토, 성호전자 AI 밸류체인 승부수…M&amp;A 시너지 성과 '시험대' (2026.8.5)</a></li>
+  <li><a href="https://core.asiae.co.kr/article/2026081809474931089">아시아경제, 성호전자 반기 실적·20회차 CB (2026.8.18)</a></li>
+  <li><a href="https://www.hankyung.com/article/202606122357r">한국경제, 성호전자, 반도체 장비업체 인티맥스 인수…PEF 크레센도와 동맹 (2026.6)</a></li>
+  <li><a href="https://m.news.nate.com/view/20260805n24565">성호전자 자회사 에이디에스테크, 美 상장사로부터 235억 수주 (2026.8.5)</a></li>
+  <li><a href="https://www.disclo.co.kr/c/043260/">disclo, 성호전자 재무·실적 요약 (2Q26, 10/8 종가 기준)</a></li>
+  <li><a href="https://needinfo.co.kr/sungho-electronic-info-fin-tp-fc-26q2/">needinfo, 성호전자 2026 반기 실적·주주구성 정리</a></li>
+  <li><a href="https://www.job-post.co.kr/news/articleView.html?idxno=231989">잡포스트, 성호전자 3만원선 (2026.10.13)</a></li>
+  <li><a href="https://alphasquare.co.kr/home/stock-summary?code=043260">알파스퀘어, 성호전자 제품 매출 구성</a></li>
+  <li><a href="https://www.mt.co.kr/stock/2026/07/28/2026072808119655888">더벨, 성호전자 최대주주, 선제적 채무 상환 속도전 (2026.7.28)</a></li>
+</ul>
+<footer>공개 자료를 모아 정리한 학습용 리포트이며 투자 권유가 아니다. 블로그·집계 사이트 수치는 DART 원문과 다를 수 있다.</footer>
+</div>
